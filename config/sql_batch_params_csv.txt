@@ -1,0 +1,52 @@
+# Campus 860
+PZPEDEX.sql
+PZPAEXT.sql
+
+# Campus 861
+CB_LOCAL.sql
+CW_LOCAL.sql
+SB_LOCAL.sql
+SC_LOCAL.sql
+SD_LOCAL.sql
+SE_LOCAL.sql
+SG_LOCAL.sql
+SS_LOCAL.sql
+SV_LOCAL.sql
+SX_LOCAL.sql
+SY_CUSTOM.sql
+XB_LOCAL.sql
+XE_LOCAL.sql
+XF_LOCAL.sql
+SP_LOCAL.sql
+
+# Campus 862
+CB_LOCAL.sql
+CW_LOCAL.sql
+SB_LOCAL.sql
+SC_LOCAL.sql
+SD_LOCAL.sql
+SE_LOCAL.sql
+SG_LOCAL.sql
+SS_LOCAL.sql
+SV_LOCAL.sql
+SX_LOCAL.sql
+XB_LOCAL.sql
+XE_LOCAL.sql
+XF_LOCAL.sql
+SP_LOCAL.sql
+
+# Campus 863
+CB_LOCAL.sql
+CW_LOCAL.sql
+SB_LOCAL.sql
+SC_LOCAL.sql
+SD_LOCAL.sql
+SE_LOCAL.sql
+SG_LOCAL.sql
+SS_LOCAL.sql
+SV_LOCAL.sql
+SX_LOCAL.sql
+XB_LOCAL.sql
+XE_LOCAL.sql
+XF_LOCAL.sql
+SP_LOCAL.sql

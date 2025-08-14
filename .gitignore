@@ -1,0 +1,10 @@
+*.log
+__pycache__/
+config.ini
+data/
+sql/*CUSTOM*
+!sql/SY_CUSTOM*
+config/*custom*
+dist/
+build/
+*.spec

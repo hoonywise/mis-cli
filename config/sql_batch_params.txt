@@ -1,0 +1,46 @@
+# Campus 860
+PZPEDEX_export.sql
+PZPAEXT_export.sql
+
+# Campus 861
+CB_LOCAL_export.sql
+CW_LOCAL_export.sql
+SB_LOCAL_export.sql
+SC_LOCAL_export.sql
+SD_LOCAL_export.sql
+SE_LOCAL_export.sql
+SG_LOCAL_export.sql
+SS_LOCAL_export.sql
+SV_LOCAL_export.sql
+SX_LOCAL_export.sql
+SY_CUSTOM_export.sql
+XBEF_LOCAL_export.sql
+SP_LOCAL_export.sql
+
+# Campus 862
+CB_LOCAL_export.sql
+CW_LOCAL_export.sql
+SB_LOCAL_export.sql
+SC_LOCAL_export.sql
+SD_LOCAL_export.sql
+SE_LOCAL_export.sql
+SG_LOCAL_export.sql
+SS_LOCAL_export.sql
+SV_LOCAL_export.sql
+SX_LOCAL_export.sql
+XBEF_LOCAL_export.sql
+SP_LOCAL_export.sql
+
+# Campus 863
+CB_LOCAL_export.sql
+CW_LOCAL_export.sql
+SB_LOCAL_export.sql
+SC_LOCAL_export.sql
+SD_LOCAL_export.sql
+SE_LOCAL_export.sql
+SG_LOCAL_export.sql
+SS_LOCAL_export.sql
+SV_LOCAL_export.sql
+SX_LOCAL_export.sql
+XBEF_LOCAL_export.sql
+SP_LOCAL_export.sql
