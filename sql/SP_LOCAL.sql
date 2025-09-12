@@ -8,7 +8,9 @@ SELECT
   c.szsprec_sp02,
   c.szsprec_sp03,
   c.szsprec_gi92,
-  c.szsprec_sp04
+  case when trim(c.szsprec_sp04) IS NULL THEN '99999'
+       ELSE c.szsprec_sp04
+  END
 FROM
   szsprec c
 WHERE
