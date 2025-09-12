@@ -207,6 +207,25 @@ def run_si_export_sp():
     )
     log_action(f"SI Extract Export for term {gi03_val}")
     input("Press Enter to return to the menu...")
+    
+def run_pdis_export():
+    env = os.environ.copy()
+    env["MIS_INSTANCE_PATH"] = BASE_DIR
+    # Prompt for term value
+    gi03_val = questionary.text(
+        "Enter gi03_val (term, e.g. 253):",
+        validate=lambda t: t.isdigit() and len(t) > 0
+    ).ask()
+    if not gi03_val:
+        print("No term entered. Returning to menu.")
+        return
+    # Run the export script
+    subprocess.run(
+        ["python", "src/pdis_export.py", "PDIS_EXTRACT.sql", f"gi03_val={gi03_val}"],
+        env=env
+    )
+    log_action(f"PDIS Extract Export for term {gi03_val}")
+    input("Press Enter to return to the menu...")
 
 def run_dat_processing():
     """Handle DAT processing with method selection"""
@@ -264,7 +283,8 @@ def data_extract_preparation_menu():
                 "GVPRMIS.dat / SVRCAXX.dat Processing",
                 "GVPRMIS SQL Export Batch",
                 "Raw SQL Export Batch",
-                "SI Extract Export (Student ID/SSN)",  # <-- New option
+                "SI Extract Export (Student ID/SSN)",
+                "PDIS Extract Export (Student ID/SSN)",  
                 questionary.Separator(),
                 "Back to Main Menu"
             ],
@@ -283,6 +303,8 @@ def data_extract_preparation_menu():
             run_gvprmis_export_batch_custom()
         elif choice.startswith("SI Extract Export"):
             run_si_export_sp()
+        elif choice.startswith("PDIS Extract Export"):
+            run_pdis_export()
 
 def data_editing_stripping_menu():
     while True:
