@@ -7,7 +7,7 @@ SELECT
         c.szsbrec_sb16 || c.szsbrec_sb17 || c.szsbrec_sb18 || c.szsbrec_sb19 || c.szsbrec_sb20 || c.szsbrec_sb21 || c.szsbrec_sb22 || c.szsbrec_sb23 || c.szsbrec_sb24
     ) || (
         ' ' || c.szsbrec_sb26 || c.szsbrec_sb27 || c.szsbrec_sb28 || c.szsbrec_sb29 || c.szsbrec_sb30 || c.szsbrec_sb31 || c.szsbrec_sb32 || c.szsbrec_sb33 || c.szsbrec_sb34
-    ) || c.szsbrec_sb35 || c.szsbrec_sb36 || c.szsbrec_sb37 || c.szsbrec_sb38 || c.szsbrec_sb39 || '       ' AS sb
+    ) || c.szsbrec_sb35 || c.szsbrec_sb36 || c.szsbrec_sb37 || c.szsbrec_sb38 || c.szsbrec_sb39 || c.szsbrec_sb40 || '       ' AS sb
 FROM
     szsbrec c
 WHERE

@@ -41,7 +41,8 @@ SELECT
     c.szsbrec_sb36,
     c.szsbrec_sb37,
     c.szsbrec_sb38,
-    c.szsbrec_sb39
+    c.szsbrec_sb39,
+    c.szsbrec_sb40
 FROM
     szsbrec c
 WHERE

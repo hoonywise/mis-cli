@@ -19,7 +19,8 @@ SELECT
         c.SZXBREC_XB11 ||
         c.SZXBREC_CB00 ||
         c.SZXBREC_XB12 ||
-        '      '
+        c.szxbrec_xb13 ||
+        '     '
     ) AS XB
 FROM
     szxbrec c

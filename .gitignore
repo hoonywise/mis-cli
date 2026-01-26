@@ -8,3 +8,4 @@ config/*custom*
 dist/
 build/
 *.spec
+*.bat

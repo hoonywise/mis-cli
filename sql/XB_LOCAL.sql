@@ -17,7 +17,8 @@ SELECT
     c.SZXBREC_XB10,
     c.SZXBREC_XB11,
     c.SZXBREC_CB00,
-    c.SZXBREC_XB12
+    c.SZXBREC_XB12,
+    c.szxbrec_xb13
 FROM
     szxbrec c
 WHERE

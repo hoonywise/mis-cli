@@ -14,10 +14,12 @@ SELECT
     c.rzsfrec_sf09,
     c.rzsfrec_sf10,
     c.rzsfrec_sf11,
-    c.rzsfrec_sf17
+    c.rzsfrec_sf17,
+    c.rzsfrec_sf23,
+    c.rzsfrec_sf24
 FROM
     rzsfrec c
 WHERE
-    c.rzsfrec_gi03 = '240'
-    AND c.rzsfrec_gi01 = '861'
+    c.rzsfrec_gi03 = '{gi03_val}'
+    AND c.rzsfrec_gi01 = '{gi01_val}'
     AND c.rzsfrec_report_no = 'CALB1'

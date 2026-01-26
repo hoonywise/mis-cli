@@ -40,7 +40,7 @@ gi03_val = param_pair.split('=', 1)[1]
 
 # Compute dynamic terms for IN clause
 gi03_val_int = int(gi03_val)
-terms = [gi03_val_int - 5, gi03_val_int - 3, gi03_val_int + 3]
+terms = [gi03_val_int - 15, gi03_val_int - 13, gi03_val_int - 7, gi03_val_int - 5, gi03_val_int - 3, gi03_val_int + 3]
 terms_str = ', '.join(str(t) for t in terms)
 
 # Read SQL and substitute {gi03_val}

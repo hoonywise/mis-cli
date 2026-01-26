@@ -56,12 +56,13 @@ def extract_file_info(first_line):
     return file_type, campus, term
 
 def select_latest_dat_files(input_folder):
-    """Select the highest numbered gvprmis or svrcasy file for each file type/campus/term combination"""
-    # Find all gvprmis_*.dat and svrcasy_*.dat files
+    """Select the highest numbered gvprmis, svrcasy, or svrppca file for each file type/campus/term combination"""
     gvprmis_pattern = os.path.join(input_folder, "gvprmis_*.dat")
     svrcasy_pattern = os.path.join(input_folder, "svrcasy_*.dat")
+    svrppca_pattern = os.path.join(input_folder, "svrppca_*.dat")
     all_gvprmis = glob.glob(gvprmis_pattern)
     all_svrcasy = glob.glob(svrcasy_pattern)
+    all_svrppca = glob.glob(svrppca_pattern)
     
     file_groups = {}
     # --- Process gvprmis files ---
@@ -109,12 +110,36 @@ def select_latest_dat_files(input_folder):
             print(f"Error reading {filename}: {e}")
             log_action(f"Error reading {filename}: {e}")
             continue
+
+    # --- Process svrppca files (for PP files) ---
+    svrppca_num_pattern = re.compile(r'svrppca_(\d+)\.dat$')
+    for file_path in all_svrppca:
+        filename = os.path.basename(file_path)
+        match = svrppca_num_pattern.search(filename)
+        if not match:
+            continue
+        file_number = int(match.group(1))
+        try:
+            with open(file_path, 'r', encoding='utf-8') as file:
+                first_line = file.readline().strip()
+            if not first_line:
+                continue
+            file_type, campus, term = extract_file_info(first_line)
+            if file_type != "PP":
+                continue  # Only process PP files from svrppca
+            key = (file_type, campus, term)
+            if key not in file_groups or file_number > file_groups[key]['number']:
+                file_groups[key] = {'number': file_number, 'path': file_path}
+        except Exception as e:
+            print(f"Error reading {filename}: {e}")
+            log_action(f"Error reading {filename}: {e}")
+            continue
     
     # Return the latest file for each group
     latest_files = [info['path'] for info in file_groups.values()]
     
     # Show which files were selected
-    all_files = all_gvprmis + all_svrcasy
+    all_files = all_gvprmis + all_svrcasy + all_svrppca
     if len(all_files) > len(latest_files):
         print(f"Found {len(all_files)} total dat files, selected {len(latest_files)} latest versions:")
         log_action(f"Found {len(all_files)} total dat files, selected {len(latest_files)} latest versions:")
