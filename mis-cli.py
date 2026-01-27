@@ -148,6 +148,16 @@ def run_sg26_sg29_loader():
     except KeyboardInterrupt:
         print("\nSG26/SG29 Loader interrupted by user.")
     input("Press Enter to return to the menu...")
+    
+def run_csv_loader():
+    try:
+        env = os.environ.copy()
+        env["MIS_INSTANCE_PATH"] = BASE_DIR 
+        subprocess.run(["python", "src/csv_loader.py"], env=env)
+        log_action("CSV Loader (Database)")
+    except KeyboardInterrupt:
+        print("\nCSV Loader interrupted by user.")
+    input("Press Enter to return to the menu...")
         
 def run_finalize_submission():
     try:
@@ -355,7 +365,8 @@ def database_operations_menu():
                 questionary.Separator(),
                 "Error Report Loader",
                 "SG26/SG29 Loader",
-                "DAT Loader",                
+                "DAT Loader",
+                "CSV Loader",                
                 questionary.Separator(),
                 "Stage Highest Version to DAT Loader",
                 questionary.Separator(),
@@ -376,6 +387,8 @@ def database_operations_menu():
             run_sg26_sg29_loader()
         elif choice.startswith("DAT Loader"):
             run_dat_loader()
+        elif choice.startswith("CSV Loader"):
+            run_csv_loader()
             
 def finalize_menu():
     while True:
