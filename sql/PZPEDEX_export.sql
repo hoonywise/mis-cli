@@ -9,3 +9,4 @@ FROM
 WHERE
     c.pzebrec_gi03 = '{gi03_val}'
     AND c.pzebrec_gi01 = '{gi01_val}'
+    and c.pzebrec_report_no <> '7525'

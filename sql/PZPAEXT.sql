@@ -16,3 +16,4 @@ FROM
 WHERE
     c.pzejrec_gi03 = '{gi03_val}' 
     AND c.pzejrec_gi01 = '{gi01_val}'
+    and c.pzejrec_report_no <> '7525'
