@@ -20,6 +20,7 @@ XB_LOCAL.sql
 XE_LOCAL.sql
 XF_LOCAL.sql
 SP_LOCAL.sql
+VR_CUSTOM.sql
 
 # Campus 862
 CB_LOCAL.sql
@@ -38,6 +39,7 @@ XB_LOCAL.sql
 XE_LOCAL.sql
 XF_LOCAL.sql
 SP_LOCAL.sql
+VR_CUSTOM.sql
 
 # Campus 863
 CB_LOCAL.sql

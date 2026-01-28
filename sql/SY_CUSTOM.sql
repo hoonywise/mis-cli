@@ -170,6 +170,7 @@ SELECT
     GI90,
     GI01,
     GI03,
+    SB00,
     CB00,
     CB01,
     SY01,

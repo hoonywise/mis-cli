@@ -4,6 +4,7 @@ config.ini
 data/
 sql/*CUSTOM*
 !sql/SY_CUSTOM*
+!sql/VR_CUSTOM*
 config/*custom*
 dist/
 build/

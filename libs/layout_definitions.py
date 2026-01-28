@@ -453,5 +453,14 @@ LAYOUTS = {
         ("XF07_TOTAL_HOURS", 59, 64),
         ("CB00_CONTROL_NUMBER", 64, 76),
         ("FILLER", 76, 80)
+    ],
+    "VR": [
+        ("GI90_RECORD_CODE", 0, 2),
+        ("GI01_DISTRICT_COLLEGE_ID", 2, 5),
+        ("GI03_TERM_ID", 5, 8),
+        ("SB00_STUDENT_ID", 8, 17),
+        ("VR01_PROGRAM_ID", 17, 19),
+        ("VR02_SERVICE_ID", 19, 22),
+        ("VR03_SERVICE_AMOUNT", 22, 28)
     ]    
 }

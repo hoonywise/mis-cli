@@ -134,7 +134,12 @@ def main():
                     continue
                 for sql_file, display in employee_files:
                     if display in selected_files:
-                        jobs.append((sql_file, "860", []))
+                        # If this is PZPAEXT, run for all four campuses
+                        if display == "PZPAEXT":
+                            for campus in ["860", "861", "862", "863"]:
+                                jobs.append((sql_file, campus, []))
+                        else:
+                            jobs.append((sql_file, "860", []))
 
             elif group.startswith("Student"):
                 campus_choices = ["861", "862", "863", "ALL"]
