@@ -97,7 +97,7 @@ WITH
                 WHEN b.shrtrit_sbgi_code = 'CPLSTEX' THEN 'J'
                 WHEN b.shrtrit_sbgi_code = 'CRPRL' THEN 'Z'
             END AS SY02,
-            LPAD(TO_CHAR(a.shrtrce_credit_hours), 2, '0') || '00' AS SY03,
+            LPAD(TO_CHAR(TRUNC(a.shrtrce_credit_hours * 100)), 4, '0') AS SY03,
             RPAD(
                 CASE
                     WHEN REGEXP_LIKE (a.shrtrce_grde_code, '^T?[ABCDP]$') THEN
@@ -167,7 +167,13 @@ WITH
             AND f.szsbrec_sb00 IS NOT NULL
     )
 SELECT
-    (GI90 || GI01 || GI03 || SB00 || CB00 || CB01 || SY01 || SY02 || SY03 || SY04)
+    (
+        GI90 || GI01 || GI03 || SB00 || CB00 || CB01 || SY01 || SY02 || SY03 || CASE
+            WHEN SY03 = '0000'
+            AND SY04 IS NULL THEN 'NA'
+            ELSE NVL(SY04, '   ')
+        END
+    ) as SY
 FROM
     cte_main
 WHERE
