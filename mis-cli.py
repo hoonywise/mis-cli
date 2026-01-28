@@ -166,7 +166,7 @@ def run_invalid_rows():
         subprocess.run(["python", "src/invalid_rows.py"], env=env)
         log_action("Invalid Rows Identifier")
     except KeyboardInterrupt:
-        print("\nCSV Loader interrupted by user.")
+        print("\nInvalid Rows Identifier interrupted by user.")
     input("Press Enter to return to the menu...")
         
 def run_finalize_submission():
