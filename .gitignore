@@ -9,5 +9,3 @@ config/*custom*
 dist/
 build/
 *.spec
-*.bat
-invalid_rows.py

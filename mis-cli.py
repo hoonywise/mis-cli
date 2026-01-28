@@ -158,6 +158,16 @@ def run_csv_loader():
     except KeyboardInterrupt:
         print("\nCSV Loader interrupted by user.")
     input("Press Enter to return to the menu...")
+    
+def run_invalid_rows():
+    try:
+        env = os.environ.copy()
+        env["MIS_INSTANCE_PATH"] = BASE_DIR 
+        subprocess.run(["python", "src/invalid_rows.py"], env=env)
+        log_action("Invalid Rows Identifier")
+    except KeyboardInterrupt:
+        print("\nCSV Loader interrupted by user.")
+    input("Press Enter to return to the menu...")
         
 def run_finalize_submission():
     try:
@@ -329,6 +339,7 @@ def data_editing_stripping_menu():
                 "Replace Partial Records in DAT",
                 "Compile New DAT Set",
                 "Strip Records in DAT",
+                "Invalid Rows Identifier",
                 questionary.Separator(),
                 "Stage Final DAT to Input DAT",
                 "Stage History DAT to Input DAT",
@@ -352,6 +363,8 @@ def data_editing_stripping_menu():
             run_dat_processing()
         elif choice.startswith("Strip Records in DAT"):
             run_error_stripper()
+        elif choice.startswith("Invalid Rows Identifier"):
+            run_invalid_rows()
 
 def database_operations_menu():
     while True:
