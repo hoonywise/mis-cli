@@ -105,12 +105,17 @@ if __name__ == "__main__":
     file_path = os.path.join(final_dat_dir, dat_file)
     print(f"Selected file: {file_path}")
 
-    # Prompt for record numbers
-    rec_input = input("Enter record row numbers (space-separated): ").strip()
-    try:
-        invalid_row_numbers = [int(x) for x in rec_input.split()]
-    except ValueError:
-        print("Row numbers must be integers.")
+
+    # Prompt for record numbers or paste notification text
+    import re
+    rec_input = input("Paste record row numbers or notification message: ").strip()
+    # Extract all numbers that look like record numbers (e.g., after 'line: ')
+    invalid_row_numbers = [int(n) for n in re.findall(r"line: '?(\d+)", rec_input)]
+    if not invalid_row_numbers:
+        # Fallback: extract any standalone numbers
+        invalid_row_numbers = [int(x) for x in re.findall(r"\d+", rec_input)]
+    if not invalid_row_numbers:
+        print("No valid row numbers found.")
         sys.exit(1)
 
     # Extract gi03 from the first row, and collect (gi01, sb00) pairs from specified rows
