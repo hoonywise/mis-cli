@@ -67,6 +67,7 @@ def select_instance():
             return None, None
         instance_path = create_instance(term)
         print(f"Created new instance at {instance_path}")
+        os.startfile(instance_path) # Open the new instance folder
         log_instance_action(f"Selected new instance: {term}")
         return term, instance_path
     elif selected == "Exit to main menu":
@@ -76,6 +77,7 @@ def select_instance():
     else:
         instance_path = os.path.join(INSTANCES_DIR, selected)
         print(f"Selected instance: {selected}")
+        os.startfile(instance_path) # Open the selected instance folder
         log_instance_action(f"Selected existing instance: {selected}")
         return selected, instance_path
 
