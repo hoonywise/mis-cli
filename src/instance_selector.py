@@ -32,10 +32,19 @@ def create_instance(term):
         "shared_export",
         "dat_loader",
         "manual_download",
-        "error_report_strip"
+        "error_report_strip",
+        "csv_loader"
     ]
     for folder in subfolders:
-        os.makedirs(os.path.join(instance_path, folder), exist_ok=True)
+        folder_path = os.path.join(instance_path, folder)
+        os.makedirs(folder_path, exist_ok=True)
+        # Create sub-subfolders as specified
+        if folder in ["dat_loader", "error_report_loader"]:
+            for sub in ["pending", "completed", "log"]:
+                os.makedirs(os.path.join(folder_path, sub), exist_ok=True)
+        elif folder in ["sg_loader", "csv_loader"]:
+            for sub in ["completed", "input"]:
+                os.makedirs(os.path.join(folder_path, sub), exist_ok=True)
     log_instance_action(f"Created instance: {term} with subfolders")
     return instance_path
 
