@@ -9,3 +9,6 @@ config/*custom*
 dist/
 build/
 *.spec
+# JetBrains
+.idea/
+*.iml

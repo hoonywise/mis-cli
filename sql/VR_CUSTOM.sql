@@ -17,7 +17,7 @@ SELECT
     szsbrec_sb00 AS SB00,
     VR01,
     VR02,
-    VR03
+    LPAD(vr03, 6, '0') AS vr03
 FROM
     dwh.mis_vr_ext@dwhdb.nocccd.edu
     INNER JOIN cte_sb ON (
