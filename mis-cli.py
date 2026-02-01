@@ -178,6 +178,26 @@ def run_finalize_submission():
     except KeyboardInterrupt:
         print("\nFinalize Submission interrupted by user.")
     input("Press Enter to return to the menu...")
+
+def run_import_submission():
+    try:
+        env = os.environ.copy()
+        env["MIS_INSTANCE_PATH"] = BASE_DIR
+        subprocess.run(["python", "src/import_sub.py"], env=env)
+        log_action("Import Submission from OneDrive")
+    except KeyboardInterrupt:
+        print("\nImport Submission interrupted by user.")
+    input("Press Enter to return to the menu...")
+
+def run_open_explorer():
+    try:
+        env = os.environ.copy()
+        env["MIS_INSTANCE_PATH"] = BASE_DIR
+        subprocess.run(["python", "src/open_explorer.py"], env=env)
+        log_action("Open Term Folder in Explorer")
+    except KeyboardInterrupt:
+        print("\nOpen Term Folder in Explorer interrupted by user.")
+    input("Press Enter to return to the menu...")
         
 def run_dat_file_stager_load():
     try:
@@ -403,7 +423,7 @@ def database_operations_menu():
         elif choice.startswith("CSV Loader"):
             run_csv_loader()
             
-def finalize_menu():
+def onedrive_menu():
     while True:
         os.system('cls')
         print_logo()
@@ -414,6 +434,7 @@ def finalize_menu():
             choices=[
                 questionary.Separator(),
                 "Copy Submission to OneDrive",
+                "Import Submission from OneDrive",
                 questionary.Separator(),
                 "Back to Main Menu"
             ],
@@ -426,6 +447,8 @@ def finalize_menu():
             break
         elif choice.startswith("Copy Submission to OneDrive"):
             run_finalize_submission()
+        elif choice.startswith("Import Submission from OneDrive"):
+            run_import_submission()
             
 def main_menu():
     try:
@@ -441,8 +464,9 @@ def main_menu():
                     "Data Extract and Preparation",
                     "Data Editing and Stripping",
                     "Database Operations",
-                    "Finalize to OneDrive",
+                    "OneDrive Operations",
                     questionary.Separator(),
+                    "Open Term Folder in Explorer",
                     "Change Instance Term",
                     "Delete Instance Term",
                     "Setup/Update Configuration",
@@ -457,6 +481,8 @@ def main_menu():
                 sys.exit(0)
             elif choice.startswith("Setup/Update Configuration"):
                 run_config_setup()
+            elif choice.startswith("Open Term Folder in Explorer"):
+                run_open_explorer()
             elif choice.startswith("Change Instance Term"):
                 global current_term, BASE_DIR, DATA_DIR, MASTER_LOG, HISTORY_LOG
                 new_term, _ = select_instance()
@@ -491,8 +517,8 @@ def main_menu():
                 data_editing_stripping_menu()
             elif choice.startswith("Database Operations"):
                 database_operations_menu()
-            elif choice.startswith("Finalize"):
-                finalize_menu()
+            elif choice.startswith("OneDrive Operations"):
+                onedrive_menu()
     except KeyboardInterrupt:
         print(Fore.MAGENTA + "\nCLI interrupted by user. Goodbye!")
         sys.exit(0)

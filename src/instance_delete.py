@@ -1,11 +1,30 @@
 import os
 import shutil
+import subprocess
 import questionary
+import stat
 from datetime import datetime
 
 BASE_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DATA_ROOT = os.path.join(BASE_PATH, "data")
 INSTANCE_HISTORY = os.path.join(BASE_PATH, "instance_history.log")
+
+def explorer_windows_open():
+    # Check for running explorer.exe processes
+    result = subprocess.run('tasklist /FI "IMAGENAME eq explorer.exe"', capture_output=True, text=True, shell=True)
+    return "explorer.exe" in result.stdout
+
+def prompt_and_handle_explorer():
+    if explorer_windows_open():
+        close = questionary.confirm(
+            "Explorer windows are open and may cause folder delete to fail. "
+            "Would you like to close all Explorer windows?").ask()
+        if close:
+            subprocess.run("taskkill /f /im explorer.exe", shell=True)
+            print("All Explorer windows closed.")
+            subprocess.Popen("explorer.exe")  # Only restart if closed
+        else:
+            print("Proceeding without closing Explorer windows.")
 
 def log_instance_action(action):
     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -17,9 +36,15 @@ def list_instances():
             if os.path.isdir(os.path.join(DATA_ROOT, d)) and d.isdigit() and len(d) == 3]
     
 def on_rm_error(func, path, exc_info):
-    print(f"Error deleting {path}: {exc_info[1]}")
+    # Suppress error messages
+    try:
+        os.chmod(path, stat.S_IWRITE)
+        func(path)
+    except Exception:
+        pass  # Suppress all exceptions
 
 def delete_instance():
+    prompt_and_handle_explorer()
     instances = list_instances()
     if not instances:
         print("No instances to delete.")

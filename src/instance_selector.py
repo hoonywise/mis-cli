@@ -48,7 +48,6 @@ def create_instance(term):
     log_instance_action(f"Created instance: {term} with subfolders")
     return instance_path
 
-
 def select_instance():
     instances = list_instances()
     choices = instances + ["Create new instance", "Exit to main menu"]
@@ -67,7 +66,11 @@ def select_instance():
             return None, None
         instance_path = create_instance(term)
         print(f"Created new instance at {instance_path}")
-        os.startfile(instance_path) # Open the new instance folder
+        open_explorer = questionary.confirm(
+            "Would you like to open this folder in Explorer?"
+        ).ask()
+        if open_explorer:
+            os.startfile(instance_path)
         log_instance_action(f"Selected new instance: {term}")
         return term, instance_path
     elif selected == "Exit to main menu":
@@ -77,7 +80,11 @@ def select_instance():
     else:
         instance_path = os.path.join(INSTANCES_DIR, selected)
         print(f"Selected instance: {selected}")
-        os.startfile(instance_path) # Open the selected instance folder
+        open_explorer = questionary.confirm(
+            "Would you like to open this folder in Explorer?"
+        ).ask()
+        if open_explorer:
+            os.startfile(instance_path)
         log_instance_action(f"Selected existing instance: {selected}")
         return selected, instance_path
 
