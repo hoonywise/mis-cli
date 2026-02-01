@@ -6,7 +6,6 @@ from pathlib import Path
 # ==== LOGGING SETUP ====
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
-ORACLE_CLIENT_PATH = r"C:\Oracle\client19\product\19.0.0\client_1\bin"  # Change as needed
 # Update path to look in config folder
 CONFIG_PATH = Path(__file__).parent.parent / "config" / "config.ini"
 
@@ -22,11 +21,16 @@ def read_config(section="dwh"):
         config[section]["dsn"]
     )
 
+def get_oracle_client_path():
+    config = configparser.ConfigParser()
+    config.read(CONFIG_PATH)
+    return config["oracle_client"]["path"]
+
 def init_oracle_client():
-    """Initialize Oracle client (thick mode if available)"""
     try:
-        oracledb.init_oracle_client(lib_dir=ORACLE_CLIENT_PATH)
-        logging.info("✅ Oracle Client Loaded in Thick Mode")
+        lib_dir = get_oracle_client_path()
+        oracledb.init_oracle_client(lib_dir=lib_dir)
+        logging.info(f"✅ Oracle Client Loaded from {lib_dir}")
     except oracledb.DatabaseError as e:
         logging.warning(f"⚠️ Running in Thin Mode. Error: {e}")
 
