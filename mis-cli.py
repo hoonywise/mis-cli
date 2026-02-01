@@ -74,7 +74,7 @@ def print_logo():
 
 Created by: Jihoon Ahn <github: hoonywise>
 Email: hoonywise@proton.me
-Check for updates at https://github.com/hoonywise/mis-cli
+Check for updates at https://github.com/hoonywise/mis-cli/releases
 """ + ColoramaStyle.RESET_ALL)
 
 def run_gvprmis_export_batch():

@@ -2,7 +2,7 @@
 
 A command-line Python tool to assist users in processing and editing California college MIS files, customized for NOCCCD.
 
-Created by Jihoon Ahn ([@hoonywise](https://github.com/hoonywise))  
+Created by Jihoon Ahn [@hoonywise](https://github.com/hoonywise)  
 Contact: hoonywise@proton.me
 
 ## Table of Contents
@@ -18,9 +18,7 @@ Contact: hoonywise@proton.me
   - [Change Instance Term](#change-instance-term)
   - [Delete Instance Term](#delete-instance-term)
   - [Setup/Update Configuration](#setupupdate-configuration)
-- [Script Summaries](#script-summaries)
 - [License](#license)
-- [Acknowledgements](#acknowledgements)
 
 ---
 
@@ -28,7 +26,7 @@ Contact: hoonywise@proton.me
 MIS-CLI is a comprehensive CLI tool designed to streamline the workflow for California college MIS file management, including extraction, editing, database operations, and submission handling.
 
 ## Installation
-- Download the latest release from the [Releases](https://github.com/hoonywise/MIS-CLI/releases) page.
+- Download the latest release from the [Releases](https://github.com/hoonywise/mis-cli/releases) page.
 - Extract the zip file and run the executable file.
 
 ## Getting Started
@@ -39,7 +37,11 @@ MIS-CLI is a comprehensive CLI tool designed to streamline the workflow for Cali
   - PROD username: Username of the user who has access to the PROD database.
   - PROD password: Password of the user who has access to the PROD database.
   - PROD DSN: Data Source Name of the PROD database listed in the tnsnames.ora (ie. PROD_DB).
-  - Submission path: Path where the submission files will be stored in OneDrive.
+  - Oracle client path: Path where the Oracle client is installed. For example:
+    - `C:\Oracle\client19\product\19.0.0\client_1\bin`
+    - `C:\Oracle\instantclient_19_3`
+  - Submission path: Path where the submission files will be stored in OneDrive or local drive. For example:
+    - `C:\Users\jahn\OneDrive - North Orange County Community College District\MIS\WIP Submission Files`
 
 ## Main Menu Options
 
@@ -54,14 +56,14 @@ MIS-CLI is a comprehensive CLI tool designed to streamline the workflow for Cali
 
 ### Data Editing and Stripping
 
-| Menu Item                                 | Script(s)                        | Description                                                                 |
-|--------------------------------------------|-----------------------------------|-----------------------------------------------------------------------------|
-| Replace Partial Records in DAT             | `row_replace.py`                  | Replaces partial records in DAT files according to college code and latest file extracts. |
-| Compile New DAT set                        | `dat_compile.py`, `dat_paste.py`  | Compiles new set of DAT files from extracts in shared_export folder. Can select from 'Compile' or 'Paste' method of data writing. |
-| Strip Records in DAT                       | `error_stripper.py`               | Strips records from DAT based on the latest error report number in DWH.     |
-| Invalid Rows Identifier                    | `invalid_rows.py`                 | Detects exact locations in the SB records for invalid ASCII characters and spacing. |
-| Stage Final DAT to Input DAT               | `dat_file_stager.py`              | Stages DAT files in final_dat folder to input_dat folder for historical record keeping. |
-| Stage History DAT to Input DAT             | `dat_file_stager_hist.py`         | Stages DAT files in history_dat folder to input_dat folder for editing.     |
+| Menu Item                                 | Script(s)                        | Description                                                                                                                                          |
+|--------------------------------------------|-----------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Replace Partial Records in DAT             | `row_replace.py`                  | Replaces partial records in DAT files according to college code and latest file extracts.                                                            |
+| Compile New DAT set                        | `dat_compile.py`, `dat_paste.py`  | Compiles new set of DAT files from extracts in shared_export folder. Can select from 'Compile' or 'Paste' method of data writing.                    |
+| Strip Records in DAT                       | `error_stripper.py`               | Strips records from DAT based on the latest error report number in DWH.                                                                              |
+| Invalid Rows Identifier                    | `invalid_rows.py`                 | Detects exact locations in the SB records for invalid ASCII characters and spacing.                                                                  |
+| Stage Final DAT to Input DAT               | `dat_file_stager.py`              | Stages DAT files in final_dat folder to input_dat folder for historical record keeping.  At the same time, it stages files to input_dat for editing. |
+| Stage History DAT to Input DAT             | `dat_file_stager_hist.py`         | Stages DAT files in history_dat folder to input_dat folder for editing.                                                                              |
 
 ### Database Operations
 
@@ -75,34 +77,19 @@ MIS-CLI is a comprehensive CLI tool designed to streamline the workflow for Cali
 
 ### OneDrive Operations
 
-| Menu Item                                 | Script(s)                        | Description                                                                 |
-|--------------------------------------------|-----------------------------------|-----------------------------------------------------------------------------|
-| Copy Submission to OneDrive                | `finalize_sub.py`                 | Copies all files from error_report_loader, history_dat, shared_export to OneDrive folder for safe keeping. |
-| Import Submission from OneDrive            | `import_sub.py`                   | Imports all files from OneDrive folder to error_report_loader, history_dat, shared_export folders. |
+| Menu Item                                 | Script(s)                        | Description                                                                                                                        |
+|--------------------------------------------|-----------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
+| Copy Submission to OneDrive                | `finalize_sub.py`                 | Copies all files from error_report_loader, history_dat, shared_export to OneDrive folder for safe keeping.  Organized by MIS term. |
+| Import Submission from OneDrive            | `import_sub.py`                   | Imports all term folders and files from OneDrive folder to error_report_loader, history_dat, shared_export folders.                |
 
-### Open Term Folder in Explorer
+### Miscellaneous Commands
 
-| Menu Item                                 | Script(s)                        | Description                                                                 |
-|--------------------------------------------|-----------------------------------|-----------------------------------------------------------------------------|
-| Open Term Folder in Explorer               | `open_explorer.py`                | Opens a selected or current term folder in Windows Explorer.                |
-
-### Change Instance Term
-
-| Menu Item                                 | Script(s)                        | Description                                                                 |
-|--------------------------------------------|-----------------------------------|-----------------------------------------------------------------------------|
-| Change Instance Term                       | `instance_selector.py`            | Switches between term instances.                                            |
-
-### Delete Instance Term
-
-| Menu Item                                 | Script(s)                        | Description                                                                 |
-|--------------------------------------------|-----------------------------------|-----------------------------------------------------------------------------|
-| Delete Instance Term                       | `instance_delete.py`              | Deletes a term instance and its associated files. Must ensure files are copied to OneDrive first. |
-
-### Setup/Update Configuration
-
-| Menu Item                                 | Script(s)                        | Description                                                                 |
-|--------------------------------------------|-----------------------------------|-----------------------------------------------------------------------------|
-| Setup/Update Configuration                 | `config_setup.py`                 | Same as the initial setup. Run this to update configuration.                |
+| Menu Item                      | Script(s)              | Description                                                                                       |
+|-------------------------------|------------------------|---------------------------------------------------------------------------------------------------|
+| Open Term Folder in Explorer   | `open_explorer.py`     | Opens a selected or current term folder in Windows Explorer.                                      |
+| Change Instance Term           | `instance_selector.py` | Allows switching between term instances.                                                          |
+| Delete Instance Term           | `instance_delete.py`   | Deletes a term instance and its associated files. Must ensure files are copied to OneDrive first. |
+| Setup/Update Configuration     | `config_setup.py`      | Same as the initial setup. Run this to update configuration.                                      |
 
 
 ## License
