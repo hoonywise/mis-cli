@@ -1,7 +1,8 @@
 *.log
 __pycache__/
 config.ini
-data/
+data/*
+!data/.gitkeep
 sql/*CUSTOM*
 !sql/SY_CUSTOM*
 !sql/VR_CUSTOM*
@@ -9,6 +10,6 @@ config/*custom*
 dist/
 build/
 *.spec
-# JetBrains
 .idea/
 *.iml
+build_release.*

@@ -61,10 +61,28 @@ else:
 
 source_folder = os.path.join(submission_path, selected_term)
 
+def find_folder_case_insensitive(parent_dir, target_name):
+    for name in os.listdir(parent_dir):
+        if name.lower() == target_name.lower() and os.path.isdir(os.path.join(parent_dir, name)):
+            return name
+    return target_name  # fallback if not found
+
 folders_to_copy = [
-    (os.path.join(source_folder, "Data Extracts"), os.path.join(BASE_DIR, "shared_export"), "Data Extracts"),
-    (os.path.join(source_folder, "dat (subs)"), os.path.join(BASE_DIR, "history_dat"), "dat (subs)"),
-    (os.path.join(source_folder, "Error Reports"), os.path.join(BASE_DIR, "error_report_loader", "completed"), "Error Reports"),
+    (
+        os.path.join(source_folder, find_folder_case_insensitive(source_folder, "Data Extracts")),
+        os.path.join(BASE_DIR, "shared_export"),
+        "Data Extracts"
+    ),
+    (
+        os.path.join(source_folder, find_folder_case_insensitive(source_folder, "dat")),
+        os.path.join(BASE_DIR, "history_dat"),
+        "dat"
+    ),
+    (
+        os.path.join(source_folder, find_folder_case_insensitive(source_folder, "Error Reports")),
+        os.path.join(BASE_DIR, "error_report_loader", "completed"),
+        "Error Reports"
+    ),
 ]
 
 for src, dst, desc in folders_to_copy:
