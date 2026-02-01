@@ -49,7 +49,6 @@ MIS-CLI is a comprehensive CLI tool designed to streamline the workflow for Cali
 |--------------------------------------------|-----------------------------------|-----------------------------------------------------------------------------|
 | GVPRMIS.dat / SVRCAXX.dat Processing       | `gvprmis_processing.py`           | Process manually downloaded GVPRMIS.dat or SVRCAXX.dat files.               |
 | GVPRMIS SQL Export Batch                   | `gvprmis_export_batch.py`         | Runs export scripts for GVAREPT, PZPEDEX, PZPAEXT. Must run Banner jobs first. |
-| Raw SQL Export Batch                       | `gvprmis_export_batch_custom.py`  | Runs custom SQL scripts for MIS data extraction. Work in progress, not all files are included. |
 | SI Extract Export (Student ID/SSN)         | `si_export_sp.py`                 | Runs custom SI export scripts. Currently only for SP file.                  |
 | PDIS Extract Export (Student ID/SSN)       | `pdis_export.py`                  | Runs PDIS student SSN files for county submission.                          |
 

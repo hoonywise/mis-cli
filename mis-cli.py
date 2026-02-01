@@ -84,12 +84,12 @@ def run_gvprmis_export_batch():
     log_action("GVPRMIS SQL Export Batch")
     input("Press Enter to return to the menu...")
 
-def run_gvprmis_export_batch_custom():
-    env = os.environ.copy()
-    env["MIS_INSTANCE_PATH"] = BASE_DIR    
-    subprocess.run(["python", "src/gvprmis_export_batch_custom.py"], env=env)
-    log_action("Raw SQL Export Batch")
-    input("Press Enter to return to the menu...")
+#def run_gvprmis_export_batch_custom():
+#    env = os.environ.copy()
+#    env["MIS_INSTANCE_PATH"] = BASE_DIR
+#    subprocess.run(["python", "src/gvprmis_export_batch_custom.py"], env=env)
+#    log_action("Raw SQL Export Batch")
+#    input("Press Enter to return to the menu...")
 
 def run_gvprmis_processing():
     env = os.environ.copy()
@@ -322,7 +322,7 @@ def data_extract_preparation_menu():
                 questionary.Separator(),
                 "GVPRMIS.dat / SVRCAXX.dat Processing",
                 "GVPRMIS SQL Export Batch",
-                "Raw SQL Export Batch",
+#                "Raw SQL Export Batch",
                 "SI Extract Export (Student ID/SSN)",
                 "PDIS Extract Export (Student ID/SSN)",  
                 questionary.Separator(),
@@ -339,8 +339,8 @@ def data_extract_preparation_menu():
             run_gvprmis_processing()
         elif choice.startswith("GVPRMIS SQL Export Batch"):
             run_gvprmis_export_batch()
-        elif choice.startswith("Raw SQL Export Batch"):
-            run_gvprmis_export_batch_custom()
+#        elif choice.startswith("Raw SQL Export Batch"):
+#            run_gvprmis_export_batch_custom()
         elif choice.startswith("SI Extract Export"):
             run_si_export_sp()
         elif choice.startswith("PDIS Extract Export"):
