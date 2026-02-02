@@ -1,21 +1,20 @@
 SELECT
-    c.SZXFREC_GI90,
-    c.SZXFREC_GI01,
-    c.SZXFREC_GI03,
-    c.SZXFREC_CB01,
-    c.SZXFREC_XB00,
-    c.SZXFREC_XF00,
-    c.SZXFREC_XF01,
-    c.SZXFREC_XF02,
-    c.SZXFREC_XF03,
-    c.SZXFREC_XF04,
-    c.SZXFREC_XF05,
-    c.SZXFREC_XF06,
-    c.SZXFREC_XF07,
-    c.SZXFREC_CB00
+    c.szxfrec_gi90,
+    c.szxfrec_gi01,
+    c.szxfrec_gi03,
+    c.szxfrec_cb01,
+    c.szxfrec_xb00,
+    c.szxfrec_xf00,
+    c.szxfrec_xf01,
+    c.szxfrec_xf02,
+    c.szxfrec_xf03,
+    c.szxfrec_xf04,
+    c.szxfrec_xf05,
+    c.szxfrec_xf06,
+    c.szxfrec_xf07,
+    c.szxfrec_cb00
 FROM
     szxfrec c
-WHERE
-    {gi03_col} = '{gi03_val}'
-    AND {gi01_col} = '{gi01_val}'
-    AND c.szxfrec_report_no = 'CALB1'
+WHERE c.szxfrec_gi03 = '{gi03_val}'
+  AND c.szxfrec_gi01 = '{gi01_val}'
+  AND c.szxfrec_report_no = 'CALB1'
