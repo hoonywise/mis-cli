@@ -25,8 +25,8 @@ FROM
     szsxrec c
     CROSS JOIN cte_sx07 cc
 WHERE
-    {gi03_col} = '{gi03_val}'
+    c.szsxrec_gi03 = '{gi03_val}'
     AND (
-        {gi01_col} <> '863'
-        OR ({gi01_col} = '863' AND c.szsxrec_report_no = 'TEST1')
+        c.szsxrec_gi01 <> '863'
+        OR (c.szsxrec_gi03 = '863' AND c.szsxrec_report_no = 'TEST1')
     )
