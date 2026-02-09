@@ -67,6 +67,8 @@ def find_folder_case_insensitive(parent_dir, target_name):
             return name
     return target_name  # fallback if not found
 
+external_root = os.path.join(source_folder, find_folder_case_insensitive(source_folder, "External Files"))
+
 folders_to_copy = [
     (
         os.path.join(source_folder, find_folder_case_insensitive(source_folder, "Data Extracts")),
@@ -79,9 +81,29 @@ folders_to_copy = [
         "dat"
     ),
     (
+        os.path.join(source_folder, find_folder_case_insensitive(source_folder, "Final dat")),
+        os.path.join(BASE_DIR, "final_dat"),
+        "Final dat"
+    ),
+    (
         os.path.join(source_folder, find_folder_case_insensitive(source_folder, "Error Reports")),
         os.path.join(BASE_DIR, "error_report_loader", "completed"),
         "Error Reports"
+    ),
+    (
+        os.path.join(external_root, "sg_loader"),
+        os.path.join(BASE_DIR, "sg_loader"),
+        "External Files/sg_loader"
+    ),
+    (
+        os.path.join(external_root, "csv_loader"),
+        os.path.join(BASE_DIR, "csv_loader"),
+        "External Files/csv_loader"
+    ),
+    (
+        os.path.join(external_root, "manual_download"),
+        os.path.join(BASE_DIR, "manual_download"),
+        "External Files/manual_download"
     ),
 ]
 

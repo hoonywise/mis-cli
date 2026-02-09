@@ -4,6 +4,7 @@ import shutil
 import argparse
 from collections import defaultdict
 from datetime import datetime
+import questionary
 
 BASE_DIR = os.environ.get("MIS_INSTANCE_PATH", os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 MASTER_LOG = os.path.join(BASE_DIR, "mis-cli.log")
@@ -354,36 +355,136 @@ def main():
         all_campuses = sorted(all_campuses)
         print(f"Available campuses for term {term_to_process}: {', '.join(all_campuses)}")
         log_action(f"Available campuses for term {term_to_process}: {', '.join(all_campuses)}")
-        selected = input("Enter campuses to process (comma-separated, or 'all' for all, or 'q'/'c' to cancel): ").strip().lower()
-        if selected in ('q', 'c'):
-            print("Operation cancelled by user.")
-            log_action("Operation cancelled by user.")
-            return 0
-        if selected == 'all' or not selected:
-            selected_campuses = set(all_campuses)
-        else:
-            selected_campuses = set([c.strip() for c in selected.split(',') if c.strip() in all_campuses])
+
+        while True:
+            try:
+                campus_choices = ["ALL"] + all_campuses
+                selected_campuses = questionary.checkbox(
+                    "Select campus/campuses to process:",
+                    choices=campus_choices
+                ).ask()
+            except KeyboardInterrupt:
+                action = questionary.select(
+                    "Operation interrupted. What would you like to do?",
+                    choices=["Start over", "Main menu"]
+                ).ask()
+                if action == "Start over":
+                    continue
+                print("Returning to main menu.")
+                log_action("Row replace interrupted; returning to main menu.")
+                return 0
+
             if not selected_campuses:
-                raise ValueError("No valid campuses selected.")
-        print(f"Processing campuses: {', '.join(sorted(selected_campuses))}")
-        log_action(f"Processing campuses: {', '.join(sorted(selected_campuses))}")
+                print("Operation cancelled by user.")
+                log_action("Operation cancelled by user.")
+                return 0
+            if "ALL" in selected_campuses:
+                selected_campuses = list(all_campuses)
+            else:
+                selected_campuses = sorted([c for c in selected_campuses if c in all_campuses])
+            if not selected_campuses:
+                print("Operation cancelled by user.")
+                log_action("Operation cancelled by user.")
+                return 0
 
-        # Filter latest_versions to only include selected campuses
-        filtered_latest_versions = {}
-        for file_type, colleges in latest_versions.items():
-            filtered_colleges = {campus: path for campus, path in colleges.items() if campus in selected_campuses}
-            if filtered_colleges:
-                filtered_latest_versions[file_type] = filtered_colleges
+            print(f"Processing campuses: {', '.join(selected_campuses)}")
+            log_action(f"Processing campuses: {', '.join(selected_campuses)}")
 
-        updated_files = update_all_files(filtered_latest_versions, args.input_dat, args.output, term_to_process)
-        # Copy any .dat files for the term not already in output
-        copy_missing_dat_files(args.input_dat, args.output, term_to_process, updated_files)
-        print("\nRow replace process completed successfully")
-        log_action("Row replace process completed successfully")
-        print(f"Updated DAT files available in final_dat folder for other scripts")
-        log_action(f"Updated DAT files available in final_dat folder for other scripts")
-        generate_tx_file(args.output, term_to_process)
-        log_action("===== Row replace script finished successfully =====")
+            # Build per-campus file selections
+            campus_file_map = {}
+            try:
+                for campus in selected_campuses:
+                    file_labels = []
+                    label_to_file_type = {}
+                    for file_type, colleges in latest_versions.items():
+                        if campus not in colleges:
+                            continue
+                        path = colleges[campus]
+                        m = re.match(r'[A-Z]{2}_\d{3}_\d{3}_(\d+)\.txt$', os.path.basename(path))
+                        version = m.group(1) if m else "?"
+                        label = f"{file_type} (v{version})"
+                        file_labels.append(label)
+                        label_to_file_type[label] = file_type
+
+                    if not file_labels:
+                        msg = f"No files available for campus {campus}; cancelling."
+                        print(msg)
+                        log_action(msg)
+                        return 0
+
+                    choices = ["ALL"] + sorted(file_labels)
+                    selected_files = questionary.checkbox(
+                        f"Select file types to replace for campus {campus}:",
+                        choices=choices
+                    ).ask()
+                    if not selected_files:
+                        print("Operation cancelled by user.")
+                        log_action("Operation cancelled by user.")
+                        return 0
+                    if "ALL" in selected_files:
+                        campus_file_map[campus] = sorted(label_to_file_type.values())
+                    else:
+                        campus_file_map[campus] = sorted([label_to_file_type[f] for f in selected_files if f in label_to_file_type])
+
+                    if not campus_file_map[campus]:
+                        print("Operation cancelled by user.")
+                        log_action("Operation cancelled by user.")
+                        return 0
+
+            except KeyboardInterrupt:
+                action = questionary.select(
+                    "Operation interrupted. What would you like to do?",
+                    choices=["Start over", "Main menu"]
+                ).ask()
+                if action == "Start over":
+                    continue
+                print("Returning to main menu.")
+                log_action("Row replace interrupted; returning to main menu.")
+                return 0
+
+            summary = []
+            for campus in selected_campuses:
+                summary.append(f"Campus {campus}: {', '.join(campus_file_map.get(campus, []))}")
+            try:
+                confirm = questionary.select(
+                    f"Proceed with replace for term {term_to_process}?\n  " + "\n  ".join(summary),
+                    choices=["Yes", "No (start over)", "Quit"]
+                ).ask()
+            except KeyboardInterrupt:
+                action = questionary.select(
+                    "Operation interrupted. What would you like to do?",
+                    choices=["Start over", "Main menu"]
+                ).ask()
+                if action == "Start over":
+                    continue
+                print("Returning to main menu.")
+                log_action("Row replace interrupted; returning to main menu.")
+                return 0
+
+            if confirm == "Quit":
+                print("Operation cancelled by user.")
+                log_action("Operation cancelled by user.")
+                return 0
+            if confirm != "Yes":
+                continue
+
+            # Filter latest_versions to only include selected campuses and file types
+            filtered_latest_versions = {}
+            for file_type, colleges in latest_versions.items():
+                filtered_colleges = {campus: path for campus, path in colleges.items() if campus in selected_campuses and file_type in campus_file_map.get(campus, [])}
+                if filtered_colleges:
+                    filtered_latest_versions[file_type] = filtered_colleges
+
+            updated_files = update_all_files(filtered_latest_versions, args.input_dat, args.output, term_to_process)
+            # Copy any .dat files for the term not already in output
+            copy_missing_dat_files(args.input_dat, args.output, term_to_process, updated_files)
+            print("\nRow replace process completed successfully")
+            log_action("Row replace process completed successfully")
+            print(f"Updated DAT files available in final_dat folder for other scripts")
+            log_action(f"Updated DAT files available in final_dat folder for other scripts")
+            generate_tx_file(args.output, term_to_process)
+            log_action("===== Row replace script finished successfully =====")
+            break
     except Exception as e:
         print(f"Error: {e}")
         log_action(f"Error: {e}")
