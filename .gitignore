@@ -14,3 +14,5 @@ build/
 *.iml
 build_release.*
 release_notes/
+.venv/
+venv/
